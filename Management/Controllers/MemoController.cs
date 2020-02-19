@@ -48,9 +48,13 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Create", "Frame");
             }
 
-            Memo memo = new Memo(frame, db);
+            Memo memo = new Memo(frame, db)
+            {
+                Panel = db.Panels
+                    .FirstOrDefault(p => p.PanelId == frame.PanelId),
+            };
 
-
+            this.FillPanelsSelectList(db, memo.Panel.CanvasId, memo.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Memo);
             
             return View(memo);
@@ -71,7 +75,7 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Index", "Frame");
             }
 
-
+            this.FillPanelsSelectList(db, memo.Panel.CanvasId, memo.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Memo, memo.TemplateId);
 
             return View(memo);
@@ -88,6 +92,7 @@ namespace DisplayMonkey.Controllers
                 return View("Missing", new MissingItem(id));
             }
 
+            this.FillPanelsSelectList(db, memo.Panel.CanvasId, memo.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Memo, memo.TemplateId);
             
             return View(memo);
@@ -108,7 +113,7 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Index", "Frame");
             }
 
-
+            this.FillPanelsSelectList(db, memo.Panel.CanvasId, memo.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Memo, memo.TemplateId);
             
             return View(memo);

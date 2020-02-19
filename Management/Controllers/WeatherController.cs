@@ -89,9 +89,13 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Create", "Frame");
             }
 
-            Weather weather = new Weather(frame, db);
+            Weather weather = new Weather(frame, db)
+            {
+                Panel = db.Panels
+                     .FirstOrDefault(p => p.PanelId == frame.PanelId),
+            };
 
-
+            this.FillPanelsSelectList(db, weather.Panel.CanvasId, weather.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Weather);
             FillWeatherTypeSelectList();
             FillWeatherProviderSelectList();
@@ -114,6 +118,7 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Index", "Frame");
             }
 
+            this.FillPanelsSelectList(db, weather.Panel.CanvasId, weather.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Weather, weather.TemplateId);
             FillWeatherTypeSelectList();
             FillWeatherProviderSelectList();
@@ -132,6 +137,7 @@ namespace DisplayMonkey.Controllers
                 return View("Missing", new MissingItem(id));
             }
 
+            this.FillPanelsSelectList(db, weather.Panel.CanvasId, weather.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Weather, weather.TemplateId);
             FillWeatherTypeSelectList();
             FillWeatherProviderSelectList();
@@ -154,6 +160,7 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Index", "Frame");
             }
 
+            this.FillPanelsSelectList(db, weather.Panel.CanvasId, weather.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Weather, weather.TemplateId);
             FillWeatherTypeSelectList();
             FillWeatherProviderSelectList();

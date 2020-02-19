@@ -48,8 +48,16 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Create", "Frame");
             }
 
-            Outlook outlook = new Outlook(frame, db);
 
+
+
+            Outlook outlook = new Outlook(frame, db)
+            {
+                Panel = db.Panels
+                    .FirstOrDefault(p => p.PanelId == frame.PanelId),
+            };
+
+            this.FillPanelsSelectList(db, outlook.Panel.CanvasId, outlook.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Outlook);
             FillModesSelectList();
             FillAccountsSelectList();
@@ -79,6 +87,7 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Index", "Frame");
             }
 
+            this.FillPanelsSelectList(db, outlook.Panel.CanvasId, outlook.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Outlook, outlook.TemplateId);
             FillModesSelectList(outlook.Mode);
             FillAccountsSelectList(outlook.AccountId);
@@ -97,6 +106,7 @@ namespace DisplayMonkey.Controllers
                 return View("Missing", new MissingItem(id));
             }
 
+            this.FillPanelsSelectList(db, outlook.Panel.CanvasId, outlook.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Outlook, outlook.TemplateId);
             FillModesSelectList(outlook.Mode);
             FillAccountsSelectList(outlook.AccountId);
@@ -126,6 +136,7 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Index", "Frame");
             }
 
+            this.FillPanelsSelectList(db, outlook.Panel.CanvasId, outlook.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Outlook, outlook.TemplateId);
             FillModesSelectList(outlook.Mode);
             FillAccountsSelectList(outlook.AccountId);
