@@ -1,0 +1,97 @@
+﻿@model IEnumerable<DisplayMonkey.Models.Panel>
+
+@{
+    ViewBag.Title = Resources.Panels;
+    const string sep = "| ";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Panel", FormMethod.Get))
+{    
+    <fieldset><legend>@Resources.Search</legend><table>
+        <tr><td>@Resources.Canvas:</td><td><div class="select">@Html.DropDownList("CanvasId", ViewBag.Canvases as SelectList, Resources.Any)</div></td></tr>
+        <tr><td>@Resources.Name:</td><td>@Html.TextBox("name")</td></tr>
+    <tr><td colspan="2"><input type="submit" value="@Resources.Filter" /></td></tr></table></fieldset> 
+}
+
+<p>
+    @Html.ActionLink(Resources.CreateNewPanel, "Create", new { canvasId = ViewBag.Canvases.SelectedValue })
+</p>
+<table class="grid">
+    <tr>
+        <th>
+        </th>
+        <th class="nw">
+            @Resources.Canvas
+        </th>
+        <th>
+            @Resources.Panel
+        </th>
+        <th class="nw">
+            @Resources.Options
+        </th>
+        <th class="nw"></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    FullScreen fs = item.Canvas.FullScreen;
+    
+    <tr>
+        <td>
+            @if (fs.PanelId == item.PanelId)
+            {
+                <img alt="Fullscreen" src="images/full.png" />
+            }
+            else
+            {
+                <img alt="Fullscreen" src="images/partial.png" />
+            }
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.Canvas.Name)
+        </td>
+        <td>
+            @Html.ActionLink(item.Name, "Details", "Panel", new { id=item.PanelId }, null)
+        </td>
+        <td class="nw">
+            @if (fs.PanelId == item.PanelId)
+            {
+                @Html.DisplayNameFor(m => m.Canvas.FullScreen.MaxIdleInterval)
+                if (fs.MaxIdleInterval == null) 
+                {
+                    @(": ")@Resources.NotSet
+                }
+                else
+                {
+                    @(": ")@fs.MaxIdleInterval@(" ")@Resources.Sec
+                }
+            }
+            else
+            {
+                @(string.Format(Resources.PositionSize, 
+                    item.Top, 
+                    item.Left, 
+                    item.Width,
+                    item.Height))
+            }
+        </td>
+        <td class="nw">
+            @if (fs.PanelId != item.PanelId)
+            {
+                @Html.ActionLink(Resources.Edit, "Edit", "Panel", new { id=item.PanelId }, null)
+            }
+            else
+            {
+                @Html.ActionLink(Resources.Edit, "EditFS", "Panel", new { id=item.PanelId }, null)
+            }
+            @if (fs.PanelId != item.PanelId)
+            {
+                @sep @Html.ActionLink(Resources.Delete, "Delete", "Panel", new { id=item.PanelId }, null)
+            }
+        </td>
+    </tr>
+}
+
+</table>

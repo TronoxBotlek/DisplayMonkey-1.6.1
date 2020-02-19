@@ -1,0 +1,24 @@
+﻿@{ Layout = "~/Views/Shared/_Layout.cshtml"; } 
+
+@{
+    ViewBag.Title = @Resources.ResourceNotFound;
+}
+
+<hgroup class="title">
+    <h2 class="error">@Resources.AnErrorOccured</h2>
+</hgroup>
+
+<fieldset>
+    <legend>@Resources.ErrorDetails</legend>
+    <table class="error-detail">
+
+    <tr>
+        <td>@Resources.ErrorMessage</td>
+        <td><div class="error-message">@Resources.ResourceNotFound</div></td>
+    </tr>
+
+    </table>
+</fieldset>
+
+<p><a href="javascript:window.history.back();">@Resources.BackPreviousPage</a></p>
+

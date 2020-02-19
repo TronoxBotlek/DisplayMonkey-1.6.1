@@ -1,0 +1,109 @@
+﻿@model IEnumerable<DisplayMonkey.Models.Frame>
+
+@{
+    ViewBag.Title = Resources.ReOrderPanelFrames;
+    string frameContent = "";
+    int i = 0;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<ul id="film">
+
+@foreach (var item in Model)
+{
+    <li data-frame-id="@item.FrameId" data-old-sort="@((i++).ToString())">
+        @{frameContent = item.FrameType + ": ";}
+
+        @if (item is Clock)
+        {
+            @Html.Partial("../Clock/_Film", item)
+        }
+        else if (item is Html)
+        {
+            @Html.Partial("../Html/_Film", item)
+        }
+        else if (item is Memo)
+        {
+            @Html.Partial("../Memo/_Film", item)
+        }
+        else if (item is Outlook)
+        {
+            @Html.Partial("../Outlook/_Film", item)
+        }
+        else if (item is Picture)
+        {
+            @Html.Partial("../Picture/_Film", item)
+        }
+        else if (item is Powerbi)
+        {
+            @Html.Partial("../Powerbi/_Film", item)
+        }
+        else if (item is Report)
+        {
+            @Html.Partial("../Report/_Film", item)
+        }
+        else if (item is Video)
+        {
+            @Html.Partial("../Video/_Film", item)
+        }
+        else if (item is Weather)
+        {
+            @Html.Partial("../Weather/_Film", item)
+        }
+        else if (item is Youtube)
+        {
+            @Html.Partial("../Youtube/_Film", item)
+        }
+        else
+        {
+            <div class="d1">
+                <div><img src="~/images/unknown.png" alt="" /></div>
+                <div>@(string.Format("{0}, {1} {2}", item.FrameType, item.Duration, Resources.Sec))</div>
+            </div>
+            <div></div>
+        }
+
+    </li>
+}
+
+</ul>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    
+    @Html.HiddenFor(m => Model.FirstOrDefault().PanelId)
+    @Html.Hidden("json")
+    <p>
+        <input id="submit" type="submit" value="@Resources.Save" /> |
+        <a href="javascript:window.history.back();">@Resources.BackPreviousPage</a>
+    </p>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jsquery")
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#film')
+                .sortable()
+                .disableSelection()
+            ;
+
+            $('#submit').click(function (event) {
+                var json = [];
+                $('#film li').each(function (i, e) {
+                    json.push({
+                        'newSort': i,
+                        'oldSort': $(e).data('old-sort'),
+                        'frameId': $(e).data('frame-id')
+                    });
+                });
+                $('#json').val(JSON.stringify(json));
+            });
+        });
+    </script>
+}

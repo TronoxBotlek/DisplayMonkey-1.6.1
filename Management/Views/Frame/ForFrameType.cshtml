@@ -1,0 +1,73 @@
+﻿@model DisplayMonkey.Models.FrameSelector
+
+@{
+    ViewBag.Title = Resources.CreateNewFrame;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    <fieldset>
+        <legend>@Resources.Frame</legend>
+
+        <div class="editor-label">
+            @Html.Label(Resources.SelectCanvas)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(c => c.CanvasId, ViewBag.CanvasId as SelectList)
+        </div>
+
+        <div class="editor-label">
+            @Html.Label(Resources.SelectPanel)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(p => p.PanelId, ViewBag.PanelId as SelectList)
+        </div>
+
+        <div class="editor-label">
+            @Html.Label(Resources.SelectFrameType)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(s => s.FrameType, ViewBag.FrameType as SelectList)
+        </div>
+
+        <p>
+            <input type="submit" value="@Resources.Next" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewFrames, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function fillPanels () {
+            var canvasId = $('select#CanvasId').val() || 0;
+            $.ajax({
+                url: url = "@Url.Action("PanelsForCanvas", "Frame")/" + canvasId,
+            })
+            .done(function (data) {
+                var panels = $("select#PanelId"), v = panels.val();
+                panels.children().each(function (i, p) {
+                    $(p).remove();
+                });
+                $(data).each(function (i, p) {
+                    panels.append('<option value="' + p.id + (p.id == v ? '" selected>' : '">') + p.name + '</option>');
+                });
+            });
+        };
+        $(document).ready(function () {
+            $('select#CanvasId').change(function () {
+                fillPanels();
+            });
+        });
+    </script>
+}
+

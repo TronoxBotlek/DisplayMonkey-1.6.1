@@ -1,0 +1,19 @@
+﻿@model DisplayMonkey.Models.Content
+
+@{
+    ViewBag.Title = Resources.MediaDetails;
+    IEnumerable<DisplayMonkey.Models.Frame> associatedFrames = ViewBag.FrameList;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_Details")
+
+<p>
+    @Html.ActionLink(Resources.Edit, "Edit", new { id=Model.ContentId }) |
+    @Html.ActionLink(Resources.ViewUploadedMedia, "Index")
+</p>
+
+<h2>@Resources.AssociatedFrames</h2>
+
+@Html.Partial("_frameList", associatedFrames)

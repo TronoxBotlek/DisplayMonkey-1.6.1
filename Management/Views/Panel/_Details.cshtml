@@ -1,0 +1,71 @@
+﻿@model DisplayMonkey.Models.Panel
+
+@{
+    FullScreen fs = Model.Canvas.FullScreen;
+}
+
+<fieldset>
+    <legend>@Resources.Panel</legend>
+        <table><tr>
+        <td>
+
+    @Html.HiddenFor(p => p.CanvasId)
+    @Html.HiddenFor(p => p.PanelId)
+    @Html.HiddenFor(p => p.Top)
+    @Html.HiddenFor(p => p.Left)
+    @Html.HiddenFor(p => p.Width)
+    @Html.HiddenFor(p => p.Height)
+
+    <div class="divTable">
+    <div class="divRow">
+    <div class="display-label">
+        @Resources.Canvas
+    </div>
+    <div class="display-field">
+        @Html.ActionLink(Model.Canvas.Name, "Details", "Canvas", new { id=Model.CanvasId }, null)
+    </div>
+    </div>
+
+    <div class="divRow">
+    <div class="display-label">
+        @Resources.Panel
+    </div>
+    <div class="display-field">
+        @Html.Label(Model.Name)
+        @if (fs.PanelId == Model.PanelId)
+        {
+            int m = fs.MaxIdleInterval ?? -1;
+            string maxInterval = m < 0 ? Resources.Auto : m.ToString();
+            
+            @(string.Format(Resources.CanvasSizePixelsSec, 
+                //Html.DisplayFor(model => model.Canvas.Name),
+                Model.Canvas.Width, 
+                Model.Canvas.Height,
+                Html.DisplayNameFor(model => fs.MaxIdleInterval),
+                maxInterval
+                ))
+        }
+        else
+        {
+            @(string.Format(Resources.CanvasPositionSizePixels, 
+                //Html.DisplayFor(model => model.Canvas.Name),
+                Model.Left, 
+                Model.Top, 
+                Model.Width, 
+                Model.Height
+                ))
+        }
+    </div>
+    </div>
+    </div>
+        </td>
+        <td class="preview">
+            <div id="canvas" data-path="@Html.Raw(Url.Action("Data", "Canvas"))">
+                <div>
+                    <img src="@Html.Raw(Url.Action("Thumb", "Media", new { id="nnn", width="qqq", height="qqq" }))" alt="Background" />
+                </div>
+            </div>
+        </td>
+    </tr></table>
+</fieldset>
+

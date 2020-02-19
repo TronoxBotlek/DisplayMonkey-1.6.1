@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DisplayMonkey.Models.Setting>
+
+@{
+    ViewBag.Title = Resources.ApplicationSettings;
+    string currentGroupName = "";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="grid">
+
+@foreach (var item in Model)
+{
+    if (currentGroupName != item.Group)
+    {
+        currentGroupName = item.Group;
+        <tr>
+            <th>
+                @Html.DisplayFor(m => item.Group)
+            </th>
+            <th></th>
+        </tr>
+    }
+    <tr>
+        <td class="nw">
+            @Html.ActionLink(item.Name, "Edit", new { id=item.Key })
+        </td>
+        <td>
+            @switch (item.Type)
+            {
+                case SettingTypes.SettingType_IntPositive:
+                    <p class="num">@Html.DisplayFor(m => item.IntValuePositive)</p>
+                    break;
+                    
+                case SettingTypes.SettingType_String:
+                    @Html.DisplayFor(m => item.StringValue)
+                    break;
+                    
+                case SettingTypes.SettingType_DecimalPositive:
+                    <p class="num">@Html.DisplayFor(m => item.DecimalValuePositive)</p>
+                    break;
+                    
+                case SettingTypes.SettingType_Int:
+                    <p class="num">@Html.DisplayFor(m => item.IntValue)</p>
+                    break;
+                    
+                case SettingTypes.SettingType_Decimal:
+                    <p class="num">@Html.DisplayFor(m => item.DecimalValue)</p>
+                    break;
+                    
+                default:
+                    @Html.DisplayFor(m => item.RawValue)
+                    break;
+            }
+        </td>
+    </tr>
+}
+
+</table>

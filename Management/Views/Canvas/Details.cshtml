@@ -1,0 +1,127 @@
+﻿@model DisplayMonkey.Models.Canvas
+
+@{
+    ViewBag.Title = Resources.CanvasDetails;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_Details")
+
+<p>
+    @Html.ActionLink(Resources.Edit, "Edit", new { id=Model.CanvasId }) |
+    @Html.ActionLink(Resources.Copy, "Copy", new { id=Model.CanvasId }) |
+    @Html.ActionLink(Resources.ViewCanvases, "Index")
+</p>
+
+<h2>@Resources.AssociatedPanels</h2>
+
+@Html.ActionLink(Resources.CreateNewPanel, "Create", "Panel", new { canvasId=Model.CanvasId }, null)
+
+<table class="grid">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Panels.FirstOrDefault().Name)
+        </th>
+        <th>
+            @Resources.Details
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Panels)
+{
+    DisplayMonkey.Models.FullScreen fs = item.Canvas.FullScreen;
+    
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Details", "Panel", new { id=item.PanelId }, null)
+        </td>
+        <td>
+            @if (fs.PanelId == item.PanelId)
+            {
+                @Html.DisplayNameFor(m => m.FullScreen.MaxIdleInterval)
+                if (fs.MaxIdleInterval == null) 
+                {
+                    @(string.Format(": {0}", Resources.Auto))
+                }
+                else
+                {
+                    @(string.Format(": {0} {1}", fs.MaxIdleInterval, Resources.Sec))
+                }
+            }
+            else
+            {
+                @(string.Format(Resources.PositionSize, 
+                    item.Top, 
+                    item.Left, 
+                    item.Width,
+                    item.Height))
+            }
+            @if (item.Frames.Count > 0)
+            {
+                @(string.Format(", {0} {1}", item.Frames.Count, Resources.Frames))
+            }
+        </td>
+        <td>
+            @if (fs.PanelId != item.PanelId)
+            {
+                @Html.ActionLink(Resources.Edit, "Edit", "Panel", new { id=item.PanelId }, null)
+            }
+            else
+            {
+                @Html.ActionLink(Resources.Edit, "EditFS", "Panel", new { id=item.PanelId }, null)
+            }
+            @if (fs.PanelId != item.PanelId)
+            {
+                <text>| </text>@Html.ActionLink(Resources.Delete, "Delete", "Panel", new { id=item.PanelId }, null)
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+<h2>@Resources.AssociatedDisplays</h2>
+
+@Html.ActionLink(Resources.CreateNewDisplay, "Create", "Display", new { canvasId=Model.CanvasId }, null)
+
+<table class="grid">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Displays.FirstOrDefault().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Displays.FirstOrDefault().Host)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Displays.FirstOrDefault().Location)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Displays) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Browse", "Display", new { id = item.DisplayId }, new { target = "_blank", title = Resources.BrowseDisplay })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Host)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Name)
+        </td>
+        <td>
+            @Html.ActionLink(Resources.Edit, "Edit", "Display", new { id=item.DisplayId }, null) |
+            @Html.ActionLink(Resources.Delete, "Delete", "Display", new { id=item.DisplayId }, null)
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jsquery")
+    @Scripts.Render("~/bundles/panel")
+}

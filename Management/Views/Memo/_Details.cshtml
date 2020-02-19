@@ -1,0 +1,31 @@
+﻿@model DisplayMonkey.Models.Memo
+
+    @Html.Partial("_frameDetails", Model as Frame)
+
+    <fieldset>
+        <legend>@Resources.Memo</legend>
+
+        <div class="divTable">
+
+        <div class="divRow">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Subject)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Subject)
+        </div>
+        </div>
+
+        <div class="divRow">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Body)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Body)
+        </div>
+        </div>
+
+        </div>
+
+    </fieldset>
+

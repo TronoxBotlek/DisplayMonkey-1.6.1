@@ -1,0 +1,28 @@
+﻿@model DisplayMonkey.Models.Canvas
+
+@{
+    ViewBag.Title = Resources.CreateNewFrame;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    <fieldset>
+        <legend>@Resources.NewFrame</legend>
+
+        <div class="editor-label">
+            @Html.Label(Resources.SelectCanvas)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(c => c.CanvasId, ViewBag.CanvasId as SelectList)
+        </div>
+        <p>
+            <input type="submit" value="@Resources.Next" />
+        </p>
+    </fieldset>
+}
+

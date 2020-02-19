@@ -1,0 +1,44 @@
+﻿@model DisplayMonkey.Models.Picture
+
+    <table class="divTable"><tr>
+        <td>
+        
+            @Html.Partial("_frameDetails", Model as Frame)
+            @Html.Partial("_frameCacheDetails", Model as Frame)
+
+            <fieldset>
+                <legend>@Resources.Picture</legend>
+
+                <div class="divTable">
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Resources.Content
+                </div>
+                <div class="display-field">
+                    @Html.ActionLink(Model.Content.Name, "Details", "Media", new { id=Model.ContentId }, null)
+                </div>
+                </div>
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.Mode)
+                </div>
+                <div class="display-field">
+                    @Model.Mode.Translate()
+                </div>
+                </div>
+
+                </div>
+
+            </fieldset>
+
+        </td>
+
+        <td>
+            <div id="picture">
+                 <img src="@Url.Action("Thumb", "Media", new { id = Model.ContentId, width = 200, height = 200, mode = (int)RenderModes.RenderMode_Fit })" alt="" />
+            </div>
+        </td>
+
+    </tr></table>

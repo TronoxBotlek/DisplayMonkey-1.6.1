@@ -1,0 +1,20 @@
+﻿@model DisplayMonkey.Models.Report
+
+@{
+    ViewBag.Title = Resources.DeleteReportFrame;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.AreYouSureYouWantToDeleteThisFrame</h3>
+
+@Html.Partial("_Details")
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Delete" /> |
+        @Html.ActionLink(Resources.ViewFrames, "Index", "Frame")
+    </p>
+}

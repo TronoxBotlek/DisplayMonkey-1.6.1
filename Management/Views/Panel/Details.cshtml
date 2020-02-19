@@ -1,0 +1,37 @@
+﻿@model DisplayMonkey.Models.Panel
+
+@{
+    ViewBag.Title = Resources.PanelDetails;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_Details")
+
+<p>
+    @if (Model.IsFullscreen)
+    {
+        @Html.ActionLink(Resources.Edit, "EditFS", new { id=Model.PanelId })
+    }
+    else
+    {
+        @Html.ActionLink(Resources.Edit, "Edit", new { id=Model.PanelId })
+    }
+     | @Html.ActionLink(Resources.ViewPanels, "Index")
+</p>
+
+<h2>@Resources.AssociatedFrames</h2>
+
+@Html.ActionLink(Resources.CreateNewFrame, "Create", "Frame", new { PanelId = Model.PanelId }, null)
+@if (Model.Frames.Count > 1) 
+{ 
+    @(" | ")@Html.ActionLink(Resources.ReOrderFrames, "SortFrames", new { id = Model.PanelId })
+}
+
+@Html.Partial("_frameList", Model.Frames)
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jsquery")
+    @Scripts.Render("~/bundles/panel")
+}

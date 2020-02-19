@@ -1,0 +1,32 @@
+﻿@model IEnumerable<DisplayMonkey.Models.Level>
+
+@{
+    ViewBag.Title = Resources.OrganizationLevels;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink(Resources.CreateNew, "Create")
+</p>
+<table class="grid">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id=item.LevelId })
+        </td>
+        <td>
+            @Html.ActionLink(Resources.Edit, "Edit", new { id=item.LevelId }) |
+            @Html.ActionLink(Resources.Delete, "Delete", new { id=item.LevelId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,26 @@
+﻿@model DisplayMonkey.Models.Panel
+
+@{
+    ViewBag.Title = Resources.DeletePanel;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.AreYouSureYouWantToDeleteThisPanel</h3>
+
+@Html.Partial("_Details")
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Delete" /> |
+        @Html.ActionLink(Resources.ViewPanels, "Index")
+    </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jsquery")
+    @Scripts.Render("~/bundles/panel")
+}

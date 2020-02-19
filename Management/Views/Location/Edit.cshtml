@@ -1,0 +1,117 @@
+﻿@model DisplayMonkey.Models.Location
+
+@{
+    ViewBag.Title = Resources.EditOrganizationLocation;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    <fieldset>
+        <legend>@Resources.Location</legend>
+
+        @Html.HiddenFor(model => model.LocationId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Level)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Level.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Area)
+        </div>
+        <div class="editor-field">
+            @Html.DisplayFor(model => model.Area.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Culture)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(m => m.Culture, ViewBag.Cultures as SelectList, Resources.FromAreaOrServerDefault)
+            @Html.ValidationMessageFor(model => model.Culture)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeZone)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(m => m.TimeZone, ViewBag.TimeZones as SelectList, Resources.FromAreaOrServerDefault)
+            @Html.ValidationMessageFor(model => model.TimeZone)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TemperatureUnit)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(m => m.TemperatureUnit, ViewBag.TempUnits as SelectList, Resources.FromArea)
+            @Html.ValidationMessageFor(model => model.TemperatureUnit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateFormat)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateFormat)
+            @Html.ValidationMessageFor(model => model.DateFormat)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeFormat)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeFormat)
+            @Html.ValidationMessageFor(model => model.TimeFormat)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Latitude)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Latitude)
+            @Html.ValidationMessageFor(model => model.Latitude)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Longitude)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Longitude)
+            @Html.ValidationMessageFor(model => model.Longitude)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Woeid)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Woeid)
+            @Html.ValidationMessageFor(model => model.Woeid)
+        </div>
+
+        <p>
+            <input type="submit" value="@Resources.Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewLocations, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

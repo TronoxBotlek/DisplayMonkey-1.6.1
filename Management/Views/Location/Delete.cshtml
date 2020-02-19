@@ -1,0 +1,20 @@
+﻿@model DisplayMonkey.Models.Location
+
+@{
+    ViewBag.Title = Resources.DeleteOrganizationLocation;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.AreYouSureYouWantToDeleteThisLocation</h3>
+
+@Html.Partial("_Details")
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Delete" /> |
+        @Html.ActionLink(Resources.ViewLocations, "Index")
+    </p>
+}

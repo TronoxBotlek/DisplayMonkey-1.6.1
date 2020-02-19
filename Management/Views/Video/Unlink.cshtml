@@ -1,0 +1,32 @@
+﻿@model DisplayMonkey.Models.Video
+
+@{
+    ViewBag.Title = Resources.UnlinkVideoFramemedia;
+    DisplayMonkey.Models.Content content = ViewBag.Content as DisplayMonkey.Models.Content;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.AreYouSureYouWantToUnlinkThisMediaAlternative</h3>
+<fieldset>
+    <legend>@Resources.Video</legend>
+
+    @Html.HiddenFor(m => m.FrameId)
+    @Html.HiddenFor(m => content.ContentId)
+    
+    <div class="display-label">
+         @Html.LabelFor(model => content.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => content.Name)
+    </div>
+
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Unlink" /> |
+        @Html.ActionLink(Resources.BackToVideoDetails, "Details", new { id = Model.FrameId })
+    </p>
+}

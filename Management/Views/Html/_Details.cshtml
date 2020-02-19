@@ -1,0 +1,48 @@
+﻿@model DisplayMonkey.Models.Html
+
+@{
+    DisplayMonkey.Models.Canvas cvs = Model.Panel.Canvas;
+    string bg = string.Format("background-color:{0};", cvs.BackgroundColor);
+    if (cvs.BackgroundImage != null)
+    {
+        bg += string.Format("background-image:url('{0}');background-position:{1}px {2}px;",
+            Html.Raw(Url.Action("Thumb", "Media", new { id = cvs.BackgroundImage, width = cvs.Width, height = cvs.Height })),
+            -Model.Panel.Left,
+            -Model.Panel.Top
+            );
+    }
+}
+
+    <table class="divTable"><tr>
+        <td>
+
+            @Html.Partial("_frameDetails", Model as Frame)
+
+            <fieldset>
+                <legend>@Resources.Html</legend>
+
+                <div class="divTable">
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.Name)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+                </div>
+
+                </div>
+            
+            </fieldset>
+        
+        </td>
+
+        <td>
+            <div class="preview">
+                <iframe style="@bg" src="@Url.Action("Preview", "Html", new { id = Model.FrameId })" id="htmlPreview" sandbox="allow-scripts"></iframe>
+            </div>
+        </td>
+
+    </tr></table>
+

@@ -1,0 +1,15 @@
+﻿@model DisplayMonkey.Models.Frame
+
+    <fieldset>
+        <legend>@Resources.CachingOptions</legend>
+
+        <div class="divRow">
+        <div class="display-label">
+                @Html.DisplayNameFor(model => model.CacheInterval)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.CacheInterval) @Resources.Min
+        </div>
+        </div>
+    
+    </fieldset>

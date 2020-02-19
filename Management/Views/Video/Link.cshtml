@@ -1,0 +1,39 @@
+﻿@model DisplayMonkey.Models.Video
+
+@{
+    ViewBag.Title = Resources.LinkMediaAlternative;
+    SelectList videos = ViewBag.Videos as SelectList;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    <fieldset>
+        <legend>@Resources.Video</legend>
+
+        @Html.HiddenFor(m => m.FrameId)
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SavedContentId)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(model => model.SavedContentId, videos, Resources.UploadNewVideos)
+        </div>
+
+        <p>
+            <input type="submit" value="@Resources.Link" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink(Resources.BackToVideoDetails, "Details", new { id = Model.FrameId })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,74 @@
+﻿@model DisplayMonkey.Models.Clock
+
+@{
+    SelectList types = ViewBag.Types as SelectList;
+}
+
+    <fieldset>
+        <legend>@Resources.Clock</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Type)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(model => model.Type, types)
+            @Html.ValidationMessageFor(model => model.Type)
+        </div>
+
+        <div class="editor-label" data-option="text">
+            @Html.LabelFor(model => model.ShowDate)
+        </div>
+        <div class="editor-field" data-option="text">
+            @Html.EditorFor(model => model.ShowDate)
+            @Html.ValidationMessageFor(model => model.ShowDate)
+        </div>
+
+        <div class="editor-label" data-option="text">
+            @Html.LabelFor(model => model.ShowTime)
+        </div>
+        <div class="editor-field" data-option="text">
+            @Html.EditorFor(model => model.ShowTime)
+            @Html.ValidationMessageFor(model => model.ShowTime)
+        </div>
+
+        <div class="editor-label" data-option="analog">
+            @Html.LabelFor(model => model.ShowSeconds)
+        </div>
+        <div class="editor-field" data-option="analog">
+            @Html.EditorFor(model => model.ShowSeconds)
+            @Html.ValidationMessageFor(model => model.ShowSeconds)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Label)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Label)
+            @Html.ValidationMessageFor(model => model.Label)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeZone)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(m => m.TimeZone, ViewBag.TimeZones as SelectList, Resources.FromArea)
+            @Html.ValidationMessageFor(model => model.TimeZone)
+        </div>
+
+    </fieldset>
+
+    <script type="text/javascript">
+        function setUi() {
+            var v = $('#Type').val();
+            $('div[data-option=text]').each(function (i,e) {
+                $(e).css('display', !!(v === '@((int)DisplayMonkey.Models.ClockTypes.ClockType_Text)') ? '' : 'none');
+            });
+            $('div[data-option=analog]').each(function (i, e) {
+                $(e).css('display', !!(v === '@((int)DisplayMonkey.Models.ClockTypes.ClockType_Analog)') ? '' : 'none');
+            });
+        }
+        $(document).ready(function () {
+            $('#Type').change(function () { setUi(); });
+            setUi();
+        });
+    </script>

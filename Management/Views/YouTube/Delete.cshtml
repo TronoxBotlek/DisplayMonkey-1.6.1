@@ -1,0 +1,57 @@
+﻿@model DisplayMonkey.Models.Youtube
+
+@{
+    ViewBag.Title = Resources.DeleteYoutubeFrame;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.AreYouSureYouWantToDeleteThisFrame</h3>
+
+@Html.Partial("_Details")
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Delete" /> |
+        @Html.ActionLink(Resources.ViewFrames, "Index", "Frame")
+    </p>
+}
+
+@section Scripts {
+    <script>
+        var tag = document.createElement('script');
+        tag.src = "https" + "://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            var quality = "default";
+            switch (@((int)Model.Quality)) {
+                case 1: quality = "small"; break;
+                case 2: quality = "medium"; break;
+                case 3: quality = "large"; break;
+                case 4: quality = "hd720"; break;
+                case 5: quality = "hd1080"; break;
+                case 6: quality = "highres"; break;
+            }
+            var rate = 1.0;
+            switch (@((int)Model.Rate)) {
+                case 1: rate = 0.25; break;
+                case 2: rate = 0.5; break;
+                case 3: rate = 1.5; break;
+                case 4: rate = 2.0; break;
+            }
+
+            new YT.Player('ytplayer', {
+                playerVars: { rel: 0, modestbranding: 1 },
+                events: { 'onReady': function (event) {
+                    event.target.setVolume(@(Model.Volume));
+                    event.target.loadVideoById('@(Model.YoutubeId)', @(Model.Start), quality);
+                    event.target.setPlaybackRate(rate);
+                }}
+            });
+        }
+    </script>
+}

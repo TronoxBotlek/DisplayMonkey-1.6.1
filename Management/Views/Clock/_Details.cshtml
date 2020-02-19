@@ -1,0 +1,101 @@
+﻿@model DisplayMonkey.Models.Clock
+
+    <table><tr>
+        <td>
+
+            @Html.Partial("_frameDetails", Model as Frame)
+
+            <fieldset>
+                <legend>@Resources.Clock</legend>
+
+                <div class="divTable">
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.Type)
+                </div>
+                <div class="display-field">
+                    @Model.Type.Translate()
+                </div>
+                </div>
+
+                @if (Model.Type == ClockTypes.ClockType_Text) 
+                {
+                    <div class="divRow">
+                    <div class="display-label">
+                         @Html.DisplayNameFor(model => model.ShowDate)
+                    </div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.ShowDate)
+                    </div>
+                    </div>
+
+                    <div class="divRow">
+                    <div class="display-label">
+                         @Html.DisplayNameFor(model => model.ShowTime)
+                    </div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.ShowTime)
+                    </div>
+                    </div>
+                } else {
+                    <div class="divRow">
+                    <div class="display-label">
+                         @Html.DisplayNameFor(model => model.ShowSeconds)
+                    </div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.ShowSeconds)
+                    </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Label))
+                {
+                    <div class="divRow">
+                    <div class="display-label">
+                         @Html.DisplayNameFor(model => model.Label)
+                    </div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.Label)
+                    </div>
+                    </div>
+                }
+
+                @if (Model.TimeZone != null)
+                {
+                    <div class="divRow">
+                    <div class="display-label">
+                         @Html.DisplayNameFor(model => model.TimeZone)
+                    </div>
+                    <div class="display-field">
+                        @Html.DisplayFor(model => model.TimeZone)
+                    </div>
+                    </div>
+                }
+
+                </div>
+
+            </fieldset>
+
+        </td>
+        <td class="preview">
+            @switch (Model.Type) 
+            {
+                case ClockTypes.ClockType_Analog:
+                    @Html.Partial("_SvgAnalog")
+                    break;
+                    
+                case ClockTypes.ClockType_Text:
+                    if (Model.ShowDate)
+                    {
+                        @String.Format("{0}", DateTime.Now.ToLongDateString())<br />
+                    }
+                    if (Model.ShowTime)
+                    {
+                        @String.Format("{0}", DateTime.Now.ToLongTimeString())
+                    }
+                    break;
+            }
+        </td>
+    </tr></table>
+

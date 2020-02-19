@@ -1,0 +1,61 @@
+﻿@model DisplayMonkey.Models.Powerbi
+
+@{
+    var action = Model.Type == PowerbiTypes.PowerbiType_Report ? "loadReport" : "loadTile";
+}
+
+    <table class="divTable"><tr>
+        <td>
+
+            @Html.Partial("_frameDetails", Model as Frame)
+
+            <fieldset>
+                <legend>@Resources.Powerbi</legend>
+
+                <div class="divTable">
+
+                    <div class="divRow">
+                        <div class="display-label">
+                            @Html.DisplayNameFor(model => model.Type)
+                        </div>
+                        <div class="display-field">
+                            @Model.Type.Translate()
+                            @Html.HiddenFor(model => model.Type)
+                        </div>
+                    </div>
+
+                    <div class="divRow">
+                        <div class="display-label">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </div>
+                        <div class="display-field">
+                            @Html.DisplayFor(model => model.Name)
+                        </div>
+                    </div>
+
+                    <div class="divRow">
+                        <div class="display-label">
+                            @Html.DisplayNameFor(model => model.AzureAccount)
+                        </div>
+                        <div class="display-field">
+                            @Html.DisplayFor(model => model.AzureAccount.Name)
+                            @Html.HiddenFor(model => model.AccountId)
+                        </div>
+                    </div>
+
+                </div>
+            
+            </fieldset>
+        
+        </td>
+        <td>
+            <div class="preview">
+                <iframe src="@Html.Raw(Model.Url)" id="powerbi_preview"></iframe>
+            </div>
+        </td>
+
+    </tr></table>
+
+    <script type="text/javascript">
+        __urlToken = "@Url.Action("token", "powerbi")";
+    </script>

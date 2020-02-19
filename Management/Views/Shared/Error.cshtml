@@ -1,0 +1,43 @@
+﻿@{ Layout = "~/Views/Shared/_Layout.cshtml"; } 
+
+@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = Resources.Error;
+    Exception ex = Model.Exception;
+    while (ex.InnerException != null)
+    {
+        ex = ex.InnerException;
+    }
+}
+
+<hgroup class="title">
+    <h2 class="error">@Resources.AnErrorOccured</h2>
+</hgroup>
+
+<fieldset>
+    <legend>@Resources.ErrorDetails</legend>
+    <table class="error-info">
+    <tr>
+        <td>@Resources.ErrorSource</td>
+        <td><div class="error-source">@Model.ControllerName/@Model.ActionName</div></td>
+    </tr>
+
+    <tr>
+        <td>@Resources.ErrorMessage</td>
+        <td><div class="error-message">@ex.Message</div></td>
+    </tr>
+
+    <tr>
+        <td>@Resources.ErrorStack</td>
+        <td>
+            <div class="error-trace">
+                <pre>@Model.Exception.StackTrace</pre>
+            </div>
+        </td>
+    </tr>
+    </table>
+</fieldset>
+
+<p><a href="javascript:window.history.back();">@Resources.BackPreviousPage</a></p>
+

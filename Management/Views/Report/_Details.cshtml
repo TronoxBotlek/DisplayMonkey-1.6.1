@@ -1,0 +1,62 @@
+﻿@model DisplayMonkey.Models.Report
+
+    <table class="divTable"><tr>
+        <td>
+        
+            @Html.Partial("_frameDetails", Model as Frame)
+            @Html.Partial("_frameCacheDetails", Model as Frame)
+
+            <fieldset>
+                <legend>@Resources.Report</legend>
+
+                <div class="divTable">
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.Name)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+                </div>
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.ReportServer)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.ReportServer.Name)
+                </div>
+                </div>
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.Path)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Path)
+                </div>
+                </div>
+
+                <div class="divRow">
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.Mode)
+                </div>
+                <div class="display-field">
+                    @Model.Mode.Translate()
+                </div>
+                </div>
+
+                </div>
+
+            </fieldset>
+
+        </td>
+
+        <td>
+            <div id="picture">
+                 <img src="@Url.Action("Thumb", "Report", new { id = Model.FrameId, width = 200, height = 200, mode = (int)RenderModes.RenderMode_Fit })" alt="" />
+            </div>
+        </td>
+
+    </tr></table>

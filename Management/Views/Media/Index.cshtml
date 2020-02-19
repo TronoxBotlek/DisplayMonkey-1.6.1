@@ -1,0 +1,65 @@
+﻿@model IEnumerable<DisplayMonkey.Models.ContentWithSize>
+
+@{
+    ViewBag.Title = Resources.Media;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Media", FormMethod.Get))
+{    
+    <fieldset><legend>@Resources.Search</legend><table>
+        <tr><td>@Resources.MediaType</td><td><div class="select">@Html.DropDownList("MediaType",Resources.Any)</div></td></tr>
+    <tr><td colspan="2"><input type="submit" value="@Resources.Filter" /></td></tr></table></fieldset> 
+}
+
+<p>
+    @Html.ActionLink(Resources.UploadMedia, "Upload")
+</p>
+<table class="grid">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th class="nw">
+            @Html.DisplayName("Thumb")
+        </th>
+        <th class="nw num">
+            @Html.DisplayNameFor(model => model.Size), @Resources.KB
+        </th>
+        <th class="nw"></th>
+    </tr>
+
+@foreach (DisplayMonkey.Models.ContentWithSize item in Model)
+{
+    <tr>
+        <td>         
+            @Html.ActionLink(item.Name, "Details", new { id=item.ContentId })
+        </td>
+        <td class="nw">
+            @item.Type.Translate()
+        </td>
+        <td class="nw">
+            @if (item.Type == ContentTypes.ContentType_Picture)
+            {
+                <img src="@Url.Action("Thumb", "Media", new { id = item.ContentId, width = 50, height = 50, mode = (int)RenderModes.RenderMode_Stretch })" alt="" />
+            }
+            else if (item.Type == ContentTypes.ContentType_Video)
+            {
+                <img src="~/images/video_thmb.png" alt="" />
+            }
+        </td>
+        <td class="nw num">
+            @Html.DisplayFor(model => item.Size)
+        </td>
+        <td class="nw">
+            @Html.ActionLink(Resources.Edit, "Edit", new { id=item.ContentId }) |
+            @Html.ActionLink(Resources.Delete, "Delete", new { id=item.ContentId })
+        </td>
+    </tr>
+}
+
+</table>

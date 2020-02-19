@@ -1,0 +1,59 @@
+﻿@model DisplayMonkey.Models.Location
+
+@{
+    ViewBag.Title = Resources.OrganizationLocationDetails;
+    IEnumerable<DisplayMonkey.Models.Display> displays = ViewBag.Displays;
+    IEnumerable<DisplayMonkey.Models.Frame> frames = ViewBag.Frames;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_Details")
+
+<p>
+    @Html.ActionLink(Resources.Edit, "Edit", new { id=Model.LocationId }) |
+    @Html.ActionLink(Resources.ViewLocations, "Index")
+</p>
+
+<h2>@Resources.AssociatedDisplays</h2>
+
+@Html.ActionLink(Resources.CreateNewDisplay, "Create", "Display", new { locationId=Model.LocationId }, null)
+
+<table class="grid">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Displays.FirstOrDefault().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Displays.FirstOrDefault().Host)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Displays.FirstOrDefault().Location)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in displays)
+{
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Browse", "Display", new { id = item.DisplayId }, new { target = "_blank" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Host)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Name)
+        </td>
+        <td>
+            @Html.ActionLink(Resources.Edit, "Edit", "Display", new { id=item.DisplayId }, null) |
+            @Html.ActionLink(Resources.Delete, "Delete", "Display", new { id=item.DisplayId }, null)
+        </td>
+    </tr>
+}
+
+</table>
+
+<h2>@Resources.AssociatedFrames</h2>
+
+@Html.Partial("_frameList", frames)

@@ -1,0 +1,38 @@
+﻿@model DisplayMonkey.Models.LocationSelector
+
+@{
+    ViewBag.Title = Resources.DesignateLocation;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    <fieldset>
+        <legend>@Resources.Frame</legend>
+
+        @Html.HiddenFor(m => m.FrameId)
+        
+        <div class="editor-label">
+            @Html.LabelFor(l => l.LocationId)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(l => l.LocationId, ViewBag.Locations as SelectList)
+        </div>
+
+        <p>
+            <input type="submit" value="@Resources.Designate" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewFrames, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

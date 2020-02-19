@@ -1,0 +1,57 @@
+﻿@model DisplayMonkey.Models.Video
+
+@{
+    ViewBag.Title = Resources.CreateNewVideoFrame;
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Upload", "Video", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    @Html.Partial("_frameData", Model as Frame)
+    @Html.Partial("_frameCacheData", Model as Frame)
+    @Html.Partial("_Edit", Model)     
+    @Html.Partial("_File", Model)
+
+    <p>
+        <input type="submit" value="@Resources.Create" />
+    </p>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewFrames, "Index", "Frame")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type="submit"]').click(function () {
+                if ($('#files').val() === "") {
+                    alert("@Resources.PleaseSelectFilesToUploadFirst");
+                    return false;
+                }
+            });
+            $('#files').change(function () {
+                if ($(this).val() != "" && typeof FileReader !== "undefined") {
+                    var file = document.getElementById('files').files[0];
+                    var ext = /[^.]+$/.exec(file.name)[0].toUpperCase();
+                    if ($('#videoExt').val().indexOf(ext) >= 0) {
+                        var max = $('#maxVideoSize').val();
+                        if (file.size > max) {
+                            alert("@Resources.CurrentMaximumAllowedSizeForVideoFilesIsSetTo" + max + "@Resources.Bytes");
+                            $(this).val("");
+                        }
+                    } else {
+                        alert("@Resources.FileFormat" + ext + "@Resources.IsNotSupported");
+                        $(this).val("");
+                    }
+                }
+            });
+        });
+    </script>
+}

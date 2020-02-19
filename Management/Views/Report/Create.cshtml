@@ -1,0 +1,29 @@
+﻿@model DisplayMonkey.Models.Report
+
+@{
+    ViewBag.Title = Resources.CreateNewReportFrame;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    @Html.Partial("_frameData", Model as Frame)
+    @Html.Partial("_frameCacheData", Model as Frame)
+    @Html.Partial("_Edit")
+        
+    <p>
+        <input type="submit" value="@Resources.Create" />
+    </p>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewFrames, "Index", "Frame")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

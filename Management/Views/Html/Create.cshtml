@@ -1,0 +1,51 @@
+﻿@model DisplayMonkey.Models.Html
+
+@{
+    ViewBag.Title = Resources.CreateNewHtmlFrame;
+    DisplayMonkey.Models.Canvas cvs = Model.Panel.Canvas;
+    string bg = string.Format("background-color:{0};", cvs.BackgroundColor);
+    if (cvs.BackgroundImage != null)
+    {
+        bg += string.Format("background-image:url('{0}');background-position:{1}px {2}px;",
+            Html.Raw(Url.Action("Thumb", "Media", new { id = cvs.BackgroundImage, width = cvs.Width, height = cvs.Height })),
+            -Model.Panel.Left,
+            -Model.Panel.Top
+            );
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+
+    @Html.Partial("_frameData", Model as Frame)
+    @Html.Partial("_Edit")
+
+    <p>
+        <input type="submit" value="@Resources.Create" />
+    </p>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewFrames, "Index", "Frame")
+</div>
+
+@section Styles {
+    @Styles.Render("~/Content/cleditorcss")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/cleditor")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //var x = jHtmlArea.defaultOptions;
+            //x.toolbar.push(["forecolor"]);
+            //$("textarea").htmlarea(x);
+            $("textarea").cleditor({ bodyStyle: "@bg" });
+        });
+    </script>
+}

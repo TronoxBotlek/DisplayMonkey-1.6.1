@@ -1,0 +1,51 @@
+﻿@model DisplayMonkey.Models.ReportServer
+
+@{
+    ViewBag.Title = Resources.DeleteReportServerAccount;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.DeletingReportServerAccountWillCauseDeletionOfAllRelatedContentAreYouSureYouWantToContinue</h3>
+<fieldset>
+    <legend>@Resources.ReportServer</legend>
+
+    @Html.HiddenFor(model => model.ServerId)
+    
+    <div class="divTable">
+    <div class="divRow">
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+    </div>
+
+    <div class="divRow">
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BaseUrl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BaseUrl)
+    </div>
+    </div>
+
+    <div class="divRow">
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.User)
+    </div>
+    <div class="display-field">
+        @(string.Format("{0}\\{1}", string.IsNullOrEmpty(Model.Domain) ? "." : Model.Domain, Model.User))
+    </div>
+    </div>
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Delete" /> |
+        @Html.ActionLink(Resources.ReportServerAccounts, "Index")
+    </p>
+}

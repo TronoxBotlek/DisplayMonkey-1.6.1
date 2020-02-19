@@ -1,0 +1,77 @@
+﻿@model DisplayMonkey.Models.Youtube
+
+@{
+    SelectList aspects = ViewBag.Aspects as SelectList;
+    SelectList qualities = ViewBag.Qualities as SelectList;
+    SelectList rates = ViewBag.Rates as SelectList;
+}
+
+    <fieldset>
+        <legend>@Resources.YouTube</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.YoutubeId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.YoutubeId)
+            @Html.ValidationMessageFor(model => model.YoutubeId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Volume)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Volume)
+            @Html.ValidationMessageFor(model => model.Volume)
+            <div id="slider-volume" style="width:310px;"></div>
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AutoLoop)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AutoLoop)
+            @Html.ValidationMessageFor(model => model.AutoLoop)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Aspect)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(model => model.Aspect, aspects)
+            @Html.ValidationMessageFor(model => model.Aspect)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quality)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(model => model.Quality, qualities)
+            @Html.ValidationMessageFor(model => model.Quality)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Rate)
+        </div>
+        <div class="editor-field select">
+            @Html.DropDownListFor(model => model.Rate, rates)
+            @Html.ValidationMessageFor(model => model.Rate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Start)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "duration" } })
+            @Html.ValidationMessageFor(model => model.Start) @Resources.Sec
+        </div>
+
+    </fieldset>

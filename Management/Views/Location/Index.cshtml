@@ -1,0 +1,83 @@
+﻿@model IEnumerable<DisplayMonkey.Models.Location>
+
+@{
+    ViewBag.Title = Resources.OrganizationLocations;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Location", FormMethod.Get))
+{    
+    <fieldset><legend>@Resources.Search</legend><table>
+        <tr><td>@Resources.Level:</td><td><div class="select">@Html.DropDownList("LevelId",Resources.Any)</div></td></tr>
+        <tr><td>@Resources.Area:</td><td><div class="select">@Html.DropDownList("AreaId",Resources.Any)</div></td></tr>
+        <tr><td>@Resources.Name:</td><td>@Html.TextBox("name")</td></tr>
+    <tr><td colspan="2"><input type="submit" value="@Resources.Filter" /></td></tr></table></fieldset> 
+}
+
+<p>
+    @Html.ActionLink(Resources.CreateNewLocation, "Create")
+</p>
+<table class="grid">
+    <tr>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.Level)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.Area)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.TemperatureUnit)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.DateFormat)
+        </th>
+        <th class="nw">
+            @Html.DisplayNameFor(model => model.TimeFormat)
+        </th>
+        <th class="nw"></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.Level.Name)
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.Area.Name)
+        </td>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id=item.LocationId })
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.TempUnitTranslated)
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.Latitude)
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.Longitude)
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.DateFormat)
+        </td>
+        <td class="nw">
+            @Html.DisplayFor(modelItem => item.TimeFormat)
+        </td>
+        <td class="nw">
+            @Html.ActionLink(Resources.Edit, "Edit", new { id=item.LocationId }) |
+            @Html.ActionLink(Resources.Delete, "Delete", new { id=item.LocationId })
+        </td>
+    </tr>
+}
+
+</table>

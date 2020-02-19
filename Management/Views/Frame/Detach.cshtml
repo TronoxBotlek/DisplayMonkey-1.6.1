@@ -1,0 +1,30 @@
+﻿@model DisplayMonkey.Models.LocationSelector
+
+@{
+    ViewBag.Title = Resources.RemoveLocation;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>@Resources.AreYouSureYouWantToRemoveLocationFromThisFrame</h3>
+<fieldset>
+    <legend>@Resources.Frame</legend>
+
+    @Html.HiddenFor(m => m.FrameId)
+    @Html.HiddenFor(m => m.LocationId)
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LocationName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LocationName)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.Referrer()
+    <p>
+        <input type="submit" value="@Resources.Remove" /> |
+        @Html.ActionLink(Resources.ViewFrames, "Index")
+    </p>
+}

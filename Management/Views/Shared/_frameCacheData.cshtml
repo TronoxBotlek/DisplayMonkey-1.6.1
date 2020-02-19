@@ -1,0 +1,18 @@
+﻿@model DisplayMonkey.Models.Frame
+
+@{
+    SelectList modes = ViewBag.CacheModes as SelectList;
+}
+
+    <fieldset>
+        <legend>@Resources.CachingOptions</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CacheInterval)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CacheInterval, new { htmlAttributes = new { @class = "duration", id = "cacheInterval" } }) @Resources.Min
+            @Html.ValidationMessageFor(model => model.CacheInterval)
+        </div>
+    
+    </fieldset>

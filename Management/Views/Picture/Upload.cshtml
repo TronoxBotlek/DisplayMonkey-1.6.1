@@ -1,0 +1,73 @@
+﻿@model DisplayMonkey.Models.Picture
+
+@{
+    ViewBag.Title = Resources.CreateNewPictureFrame;
+    string supportedImages = string.Join(", ", DisplayMonkey.Models.Picture.SupportedFormats);
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Upload", "Picture", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.Referrer()
+    
+    @Html.Hidden("maxImageSize", (object)ViewBag.MaxImageSize)
+    @Html.Hidden("imageExt", (object)supportedImages)
+
+    @Html.Partial("_frameData", Model as Frame)
+    @Html.Partial("_frameCacheData", Model as Frame)
+    @Html.Partial("_Edit", Model)
+        
+    <fieldset>
+        <legend>@Resources.UploadNewPicture</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content.Data)
+        </div>
+        <div class="editor-field">
+            <input type="file" name="file" id="file" />
+            @Html.ValidationMessageFor(model => Model.Content.Data)
+            <p>@string.Format(Resources.SupportedImageFormatsIncludeAllOtherContentWillBeIgnored, supportedImages)</p>
+        </div>
+
+    </fieldset>
+
+    <p>
+        <input type="submit" value="@Resources.Create" />
+    </p>
+}
+
+<div>
+    @Html.ActionLink(Resources.ViewFrames, "Index", "Frame")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type="submit"]').click(function () {
+                if ($('#file').val() === "") {
+                    alert("@Resources.PleaseSelectFileToUploadFirst");
+                    return false;
+                }
+            });
+            $('#file').change(function () {
+                if ($(this).val() != "" && typeof FileReader !== "undefined") {
+                    var file = document.getElementById('file').files[0];
+                    var ext = /[^.]+$/.exec(file.name)[0].toUpperCase();
+                    if ($('#imageExt').val().indexOf(ext) >= 0) {
+                        var max = $('#maxImageSize').val();
+                        if (file.size > max) {
+                            alert("@Resources.CurrentMaximumAllowedSizeForImageFilesIsSetTo" + max + " @Resources.Bytes");
+                            $(this).val("");
+                        }
+                    } else {
+                        alert("@Resources.FileFormat " + ext + " @Resources.IsNotSupported");
+                        $(this).val("");
+                    }
+                }
+            });
+        });
+    </script>
+}

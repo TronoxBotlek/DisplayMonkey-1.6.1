@@ -1,0 +1,140 @@
+﻿@{
+    DisplayMonkey.Models.TopContent[] top = ViewBag.TopFiveContent;
+    int cnt = top.Count() - 1;
+}
+
+<section class="content-wrapper main-content clear-fix">               
+
+    <table class="dashboard">
+	<thead>
+		<tr>
+			<td colspan="7">@Resources.Dashboard</td>
+		</tr>
+		<tr>
+			<td colspan="7" class="Space"></td>
+		</tr>	
+	</thead>
+      <tbody>
+        <tr>
+          <td class="Heading_Table1_Left">@Resources.Frames</td>
+          <td class="Heading_Table1_Right">&nbsp;</td>
+          <td class="Space">&nbsp;</td>
+		  <td class="Heading_Table1_Left">@Resources.Dashboard_TopFiveContent</td>
+          <td class="Heading_Table1_Right">&nbsp;</td>
+          <td class="Space">&nbsp;</td> 
+		  <td class="Heading_Table1_Left">@Resources.Setup</td>
+          <td class="Heading_Table1_Right">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="Left_Align">@Html.ActionLink(Resources.Dashboard_NumberOfFrames, "Index", "Frame")</td>
+          <td class="Right_Align">@ViewBag.Count_Frames</td>
+		  <td class="Space">&nbsp;</td>
+          <td class="Left_Align">@if (cnt >= 0) {@top[0].Name}</td>
+          <td class="Right_Align">@if (cnt >= 0) {@top[0].Count}</td>
+          <td class="Space">&nbsp;</td>
+		  <td class="Left_Align">@Html.ActionLink(@Resources.Levels, "Index", "Level")</td>
+          <td class="Right_Align">@ViewBag.Count_Levels</td>
+        </tr>
+        <tr>
+          <td class="Left_Align Alt">@Html.ActionLink(Resources.Dashboard_NumberOfActiveFrames, "Index", "Frame", new { timingOption = (int)DisplayMonkey.Models.Frame.TimingOptions.TimingOption_Current }, null)</td>
+          <td class="Right_Align Alt">@ViewBag.Count_Active_Frames</td>
+          <td class="Space">&nbsp;</td>         
+		  <td class="Left_Align Alt">@if (cnt >= 1) {@top[1].Name}</td>
+          <td class="Right_Align Alt">@if (cnt >= 1) {@top[1].Count}</td>
+          <td class="Space">&nbsp;</td>        
+		  <td class="Left_Align Alt">@Html.ActionLink(@Resources.Locations, "Index", "Location")</td>
+          <td class="Right_Align Alt">@ViewBag.Count_Locations</td>
+        </tr>
+        <tr>
+          <td class="Left_Align">@Html.ActionLink(Resources.Dashboard_NumberOfPendingFrames, "Index", "Frame", new { timingOption = (int)DisplayMonkey.Models.Frame.TimingOptions.TimingOption_Pending }, null)</td>
+          <td class="Right_Align">@ViewBag.Count_Pending_Frames</td>
+          <td class="Space">&nbsp;</td>         
+		  <td class="Left_Align">@if (cnt >= 2) {@top[2].Name}</td>
+          <td class="Right_Align">@if (cnt >= 2) {@top[2].Count}</td>
+          <td class="Space">&nbsp;</td>          
+		  <td class="Left_Align">@Html.ActionLink(@Resources.Canvases, "Index", "Canvas")</td>
+          <td class="Right_Align">@ViewBag.Count_Canvases</td>
+        </tr>
+        <tr>
+          <td class="Left_Align Alt">@Html.ActionLink(Resources.Dashboard_NumberOfExpiredFrames, "Index", "Frame", new { timingOption = (int)DisplayMonkey.Models.Frame.TimingOptions.TimingOption_Expired }, null)</td>
+          <td class="Right_Align Alt">@ViewBag.Count_Expired_Frames</td>
+          <td class="Space">&nbsp;</td>         
+		  <td class="Left_Align Alt">@if (cnt >= 3) {@top[3].Name}</td>
+          <td class="Right_Align Alt">@if (cnt >= 3) {@top[3].Count}</td>
+          <td class="Space">&nbsp;</td>          
+		  <td class="Left_Align Alt">@Html.ActionLink(@Resources.Panels, "Index", "Panel")</td>
+          <td class="Right_Align Alt">@ViewBag.Count_Panels</td>
+        </tr>
+        <tr>
+          <td class="Left_Align">@Resources.Dashboard_TotalDuration</td>
+          <td class="Right_Align">@ViewBag.Duration_Hours</td>
+          <td class="Space">&nbsp;</td>         
+		  <td class="Left_Align">@if (cnt >= 4) {@top[4].Name}</td>
+          <td class="Right_Align">@if (cnt >= 4) {@top[4].Count}</td>
+          <td class="Space">&nbsp;</td>          
+		  <td class="Left_Align">@Html.ActionLink(@Resources.Displays, "Index", "Display")</td>
+          <td class="Right_Align">@ViewBag.Count_Displays</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="dashboard">
+      <tbody>	
+        <tr>
+          <td class="Heading_Table2_Left">@Resources.Dashboard_FramesByType</td>
+          <td class="Heading_Table2_Right" colspan="2">@Resources.Dashboard_PreviousSevenDays</td>
+          <td class="Heading_Table2_Right" colspan="2">@Resources.Total</td>
+        </tr>
+        <tr>
+          <td class="Left_Align">@Html.ActionLink(Resources.Clock, "Index", "Frame", new { FrameType = "Clock" }, null)</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Clock_7</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Clock</td>
+        </tr>
+        <tr>
+          <td class="Left_Align Alt">@Html.ActionLink(Resources.Html, "Index", "Frame", new { FrameType = "HTML" }, null)</td>
+          <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Html_7</td>
+          <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Html</td>
+        </tr>
+        <tr>
+          <td class="Left_Align">@Html.ActionLink(Resources.Memo, "Index", "Frame", new { FrameType = "Memo" }, null)</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Memos_7</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Memos</td>
+        </tr>
+        <tr>
+          <td class="Left_Align Alt">@Html.ActionLink(Resources.Outlook, "Index", "Frame", new { FrameType = "Outlook" }, null)</td>
+          <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Outlook_7</td>
+          <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Outlook</td>
+        </tr>
+          <tr>
+              <td class="Left_Align">@Html.ActionLink(Resources.Picture, "Index", "Frame", new { FrameType = "Picture" }, null)</td>
+              <td class="Right_Align" colspan="2">@ViewBag.Count_Pictures_7</td>
+              <td class="Right_Align" colspan="2">@ViewBag.Count_Pictures</td>
+          </tr>
+          <tr>
+              <td class="Left_Align Alt">@Html.ActionLink(Resources.Powerbi, "Index", "Frame", new { FrameType = "Powerbi" }, null)</td>
+              <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Powerbi_7</td>
+              <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Powerbi</td>
+          </tr>
+        <tr>
+          <td class="Left_Align">@Html.ActionLink(Resources.Report, "Index", "Frame", new { FrameType = "Report" }, null)</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Reports_7</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Reports</td>
+        </tr>
+        <tr>
+            <td class="Left_Align Alt">@Html.ActionLink(Resources.Video, "Index", "Frame", new { FrameType = "Video" }, null)</td>
+            <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Videos_7</td>
+            <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Videos</td>
+        </tr>
+        <tr>
+          <td class="Left_Align">@Html.ActionLink(Resources.Weather, "Index", "Frame", new { FrameType = "Weather" }, null)</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Weather_7</td>
+          <td class="Right_Align" colspan="2">@ViewBag.Count_Weather</td>
+        </tr>
+        <tr>
+            <td class="Left_Align Alt">@Html.ActionLink(Resources.YouTube, "Index", "Frame", new { FrameType = "Youtube" }, null)</td>
+            <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Youtube_7</td>
+            <td class="Right_Align Alt" colspan="2">@ViewBag.Count_Youtube</td>
+        </tr>
+      </tbody>
+    </table>
+
+</section>
