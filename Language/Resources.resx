@@ -781,10 +781,10 @@
     <value>Setup</value>
   </data>
   <data name="SupportedImageFormatsIncludeAllOtherContentWillBeIgnored" xml:space="preserve">
-    <value>Supported image formats include {0}. All other content will be ignored.</value>
+    <value>Supported image formats include {0}. All other content will be ignored. If the file name already exists, the media will be overwritten.</value>
   </data>
   <data name="SupportedMediaFormatsIncludeForImagesAndForVideoAllOtherContentWillBeIgnored" xml:space="preserve">
-    <value>Supported media formats include {0} for images and {1} for video. All other content will be ignored.</value>
+    <value>Supported media formats include {0} for images and {1} for video. All other content will be ignored. If the file name already exists, the media will be overwritten.</value>
   </data>
   <data name="ThisFrameWillShowInAllLocations" xml:space="preserve">
     <value>This frame will show in all locations</value>
@@ -1786,5 +1786,8 @@
   </data>
   <data name="OauthAppIdRequired" xml:space="preserve">
     <value>Application ID is required</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
   </data>
 </root>
