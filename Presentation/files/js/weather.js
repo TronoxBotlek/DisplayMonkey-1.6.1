@@ -144,7 +144,7 @@ DM.Weather = Class.create(/*PeriodicalExecuter*/ DM.FrameBase, {
 
                     if (json.condition) {
 						weather.div.select('.condition_code').each(function (e) { e.src = "files/weather/" + json.condition.code + ".gif"; });
-						weather.div.select('.condition_img').each(function (e) { e.src = "files/weather2/" + json.condition.code + ".svg"; e.style = "height:55px;width:55px;"; });
+						weather.div.select('.condition_img').each(function (e) { e.src = "files/weather2/" + json.condition.code + ".svg"; });
                         weather.div.select('.condition_text').each(function (e) { e.update(json.condition.text); });
                         weather.div.select('.condition_temp').each(function (e) { e.update(json.condition.temp); });
                     }
@@ -168,7 +168,7 @@ DM.Weather = Class.create(/*PeriodicalExecuter*/ DM.FrameBase, {
 							weather.div.select('.forecast' + day + '_high').each(function (e) { e.update(json.forecast[day].high); });
 							weather.div.select('.forecast' + day + '_text').each(function (e) { e.update(json.forecast[day].text); });
 							weather.div.select('.forecast' + day + '_code').each(function (e) { e.src = "files/weather/" + json.forecast[day].code + ".gif"; });
-							weather.div.select('.forecast' + day + '_img').each(function (e) { e.src = "files/weather2/" + json.forecast[day].code + ".svg"; e.style = "height:100px;width:100px;"; });
+							weather.div.select('.forecast' + day + '_img').each(function (e) { e.src = "files/weather2/" + json.forecast[day].code + ".svg"; });
 						}
 					}
                 }
