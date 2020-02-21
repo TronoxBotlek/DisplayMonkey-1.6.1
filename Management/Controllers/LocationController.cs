@@ -301,7 +301,8 @@ namespace DisplayMonkey.Controllers
 
             catch (WebException ex)
             {
-                throw new Exception(Resources.GeoTranslationHasFailed, ex);
+                return null;
+                //throw new Exception(Resources.GeoTranslationHasFailed, ex);
             }
 
             return null;
