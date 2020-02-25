@@ -162,8 +162,12 @@ DM.Weather = Class.create(/*PeriodicalExecuter*/ DM.FrameBase, {
 					if (json.forecast) {
 						var day = 0;
 						for (day = 0; day < 5; day++) {
+							var date = new Date(json.forecast[day].date);
+							var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 							weather.div.select('.forecast' + day + '_day').each(function (e) { e.update(json.forecast[day].day); });
-							weather.div.select('.forecast' + day + '_date').each(function (e) { e.update(json.forecast[day].date); });
+							weather.div.select('.forecast' + day + '_date').each(function (e) { e.update(date.getDate()); });
+							weather.div.select('.forecast' + day + '_month').each(function (e) { e.update(months[date.getMonth()]); });
+							weather.div.select('.forecast' + day + '_year').each(function (e) { e.update(date.getYear()); });
 							weather.div.select('.forecast' + day + '_low').each(function (e) { e.update(json.forecast[day].low); });
 							weather.div.select('.forecast' + day + '_high').each(function (e) { e.update(json.forecast[day].high); });
 							weather.div.select('.forecast' + day + '_text').each(function (e) { e.update(json.forecast[day].text); });

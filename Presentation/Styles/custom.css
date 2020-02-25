@@ -11,6 +11,19 @@
 
 /* use this stylesheet to override default styles with your own */
 
+/*!
+* DisplayMonkey source file
+* http://displaymonkey.org
+*
+* Copyright (c) 2015 Fuel9 LLC and contributors
+*
+* Released under the MIT license:
+* http://opensource.org/licenses/MIT
+*/
+
+
+/* use this stylesheet to override default styles with your own */
+
 div.fullpanel {
 }
 
@@ -20,8 +33,8 @@ div.panel {
 .clock {
 }
 
-    .clock .clockLabel{
-    }
+	.clock .clockLabel {
+	}
 
 .weather {
 }
@@ -31,7 +44,7 @@ iframe.html {
 
 .memo {
 }
-	
+
 	.memo .subject {
 	}
 
@@ -50,9 +63,92 @@ iframe.html {
 .video {
 }
 
-    video.videoPlayer {
-    }
+video.videoPlayer {
+}
 
 .youtube {
+}
+
+
+:root {
+	--tronox-blue: rgb(45, 63, 136);
+	--tronox-chart-red: rgb(243,108,49);
+	--tronox-chart-green: rgb(148,201,71);
+}
+
+.centerbox {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.memo h1.subject {
+	text-transform: none;
+	padding: 5px;
+	margin: 5px;
+}
+
+.scrollingtext .subject {
+	-moz-transform: translateX(100%);
+	-webkit-transform: translateX(100%);
+	transform: translateX(100%);
+	/* Apply animation to this element */
+	-moz-animation: scrollingtext 15s linear infinite;
+	-webkit-animation: scrollingtext 15s linear infinite;
+	animation: scrollingtext 15s linear infinite;
+}
+
+.scrollingtext .body {
+	display: block;
+	-moz-transform: translateX(100%);
+	-webkit-transform: translateX(100%);
+	transform: translateX(100%);
+	/* Apply animation to this element */
+	-moz-animation: scrollingtext 15s linear infinite;
+	-webkit-animation: scrollingtext 15s linear infinite;
+	animation: scrollingtext 15s linear infinite;
+}
+
+/* Move it (define the animation) */
+@-moz-keyframes scrollingtext {
+	0% {
+		-moz-transform: translateX(100%);
+	}
+
+	100% {
+		-moz-transform: translateX(-100%);
+	}
+}
+
+@-webkit-keyframes scrollingtext {
+	0% {
+		-webkit-transform: translateX(100%);
+	}
+
+	100% {
+		-webkit-transform: translateX(-100%);
+	}
+}
+
+@keyframes scrollingtext {
+	0% {
+		-moz-transform: translateX(100%); /* Firefox bug fix */
+		-webkit-transform: translateX(100%); /* Firefox bug fix */
+		transform: translateX(100%);
+	}
+
+	100% {
+		-moz-transform: translateX(-100%); /* Firefox bug fix */
+		-webkit-transform: translateX(-100%); /* Firefox bug fix */
+		transform: translateX(-100%);
+	}
 }
 
