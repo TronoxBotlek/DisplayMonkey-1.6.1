@@ -109,6 +109,8 @@ namespace DisplayMonkey.Controllers
                 return RedirectToAction("Create", "Frame");
             }
 
+            Panel panel = db.Panels.FirstOrDefault(p => p.PanelId == video.PanelId);
+            this.FillPanelsSelectList(db, panel.CanvasId, video.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Video, video.TemplateId);
             FillVideosSelectList();
             ViewBag.MaxVideoSize = Setting.GetSetting(db, Setting.Keys.MaxVideoSize).IntValuePositive;
@@ -170,6 +172,8 @@ namespace DisplayMonkey.Controllers
                 // TODO: validator for wrong file types
             }
 
+            Panel panel = db.Panels.FirstOrDefault(p => p.PanelId == video.PanelId);
+            this.FillPanelsSelectList(db, panel.CanvasId, video.PanelId);
             this.FillTemplatesSelectList(db, FrameTypes.Video, video.TemplateId);
             FillVideosSelectList();
             ViewBag.MaxVideoSize = Setting.GetSetting(db, Setting.Keys.MaxVideoSize).IntValuePositive;
