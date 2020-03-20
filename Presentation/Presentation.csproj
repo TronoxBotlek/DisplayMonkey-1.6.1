@@ -410,6 +410,7 @@
     <Content Include="getVideo.ashx" />
     <Content Include="getDisplayData.ashx" />
     <Content Include="getAzureToken.ashx" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
